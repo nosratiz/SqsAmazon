@@ -22,7 +22,8 @@ public static class SqsExtensions
         services.AddAWSService<IAmazonSQS>(awsSqsOptions);
 
         services.AddSingleton<ISqsPublisher, SqsPublisher>();
-        // services.AddScoped<ISqsSubscribe, SqsSubscribe>();
+        services.AddSingleton<ISqsSubscribe, SqsSubscribe>();
+        services.AddSingleton<MessageDispatcher>();
         
         var handlers = Assembly.GetExecutingAssembly().DefinedTypes
             .Where(x => typeof(IMessageHandler).IsAssignableFrom(x) && !x.IsInterface && !x.IsAbstract);
